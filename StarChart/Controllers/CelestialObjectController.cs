@@ -24,6 +24,7 @@ namespace StarChart.Controllers
             var co = _context.CelestialObjects.Find(id);
             if (co != null)
             {
+                co.Satellites = _context.CelestialObjects.Where(x => x.OrbitedObjectId == co.Id).ToList();
                 return Ok(co);
             }
             else
@@ -49,7 +50,7 @@ namespace StarChart.Controllers
             }
         }
         [HttpGet(Name = "GetAll")]
-        public IActionResult GetAll(string name)
+        public IActionResult GetAll()
         {
             var co = _context.CelestialObjects.ToList();
             foreach (var c in co)
